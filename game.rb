@@ -8,7 +8,6 @@ class Game
     @player2 = Player.new("Player 2")
     @players = [@player1, @player2]
     @turn = Turn.new(@players)
-
   end
 
   def play
@@ -16,30 +15,29 @@ class Game
     header "Welcome to da Game"
 
     while (not game_over?)
-      print "#{@turn.current_player.name} "
-      # puts "#{@current_player.name} please provide two numbers"
-      # puts "Provide first number"
-      # choice1 = $stdin.gets.chomp.to_i
-      # puts "Provide second number"
-      # choice2 = $stdin.gets.chomp.to_i
+      header "Next Turn"
 
-      math_question = Question.new
-      puts math_question.display_nums
+      current_player = @turn.current_player
+      print "#{@turn.current_player.name} "
+
+      question = Question.new
+      puts question.display_nums
 
       user_answer = $stdin.gets.chomp.to_i
-      if math_question.check_answer(user_answer)
+      if question.check_answer(user_answer)
         puts "Correct!"
       else
         puts "Wrong!"
+        current_player.lose_life
       end
 
       game_summary
-
       @turn.next_turn
-      header "Next Turn"
       sleep 0.5
+
     end
 
+    winner
     header "Game Over"
   end
 
@@ -50,7 +48,6 @@ class Game
   end
 
   def header(message)
-    puts
     puts "===== #{message} ====="
     puts
   end
@@ -58,4 +55,13 @@ class Game
   def game_summary
     puts "#{@player1.name} : #{@player1.lives}/3 vs. #{@player2.name} : #{@player2.lives}/3"
   end
+
+  def winner
+    if @player1.lives === 0
+      puts "#{@player2.name} wins with a score of #{@player2.lives}/3"
+    else
+      puts "#{@player1.name} wins with a score of #{@player1.lives}/3"
+    end
+  end
+
 end
