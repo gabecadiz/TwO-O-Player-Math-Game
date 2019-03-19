@@ -12,10 +12,9 @@ class Game
 
   def play
 
-    header "Welcome to da Game"
+    header "Welcome To The best Math Game"
 
     while (not game_over?)
-      header "Next Turn"
 
       current_player = @turn.current_player
       print "#{@turn.current_player.name} "
@@ -25,15 +24,17 @@ class Game
 
       user_answer = $stdin.gets.chomp.to_i
       if question.check_answer(user_answer)
-        puts "Correct!"
+        puts "YAS! You are correct!"
       else
-        puts "Wrong!"
+        puts "Seriously? Nope, wrong!!!"
         current_player.lose_life
       end
 
+      header "Next Turn"
+
       game_summary
       @turn.next_turn
-      sleep 0.5
+      sleep 0.75
 
     end
 
@@ -58,9 +59,13 @@ class Game
 
   def winner
     if @player1.lives === 0
+      puts
       puts "#{@player2.name} wins with a score of #{@player2.lives}/3"
+      puts
     else
+      puts
       puts "#{@player1.name} wins with a score of #{@player1.lives}/3"
+      puts
     end
   end
 

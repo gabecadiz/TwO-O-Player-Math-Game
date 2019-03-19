@@ -1,5 +1,4 @@
 class Turn
-
   def initialize (players)
   @players = players.dup.shuffle
   @current_turn = 0
